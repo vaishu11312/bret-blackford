@@ -1,0 +1,117 @@
+CSCIE160 HOMEWORK 3
+
+Submitted by:  M. Bret Blackford
+
+
+Overview and Notes:
+
+The Elevator class will, when instantiated, create an array of floors (based on the NO_OF_FLOORS value).  When the floors are created each floor will independently create a number of passengers (based on number passed in by the Elevator object), and each passenger will be given a random state (a specific name will be generated along with a destination floor and a unique ID number).
+
+The Elevator’s sweep() and move() methods contain the key logic guiding the movement of the elevator object: up/down, start/stop, load/unload.
+
+
+Areas that were trickiest to code:
+
+* The random generation of each Passenger took a while to figure out.  It was hard to determine how to give each a random name and a random destination.
+* The sweep()/move() logic also took a while to set-up and debug.  Dealing with the top and bottom floors correctly is a challenge.
+* Elevator overflow/capacity was a challenge.  I stop loading at maximum capacity and require Passengers to remain queued up and waiting on floors if elevator is full. Elevator will then need to go back and pick them up.
+
+Future considerations:
+I am thinking about using Log4j to properly log my projects.  I'll need to learn some things but feel this would provide the best output/documentaion.
+
+
+
+
+
+
+
+From … http://courses.dce.harvard.edu/~cscie160/hw3-05.htm 
+Homework 3: Active Passengers, Collections
+Due: Oct 12
+Grading: 10%
+Last Modified: 07/31/2011 16:33:28 
+
+Objective: Add passengers to the elevator system and leverage Java collections. 
+Resources: 
+* Java Collections Overview 
+* Collections Tutorial 
+* Using Collections 
+
+* Migrate your classes into the package cscie160.hw3. 
+* Define and implement a class Passenger to represent passengers in our simulation. A Passenger should know its current floor and have a destination floor in mind when waiting to board the elevator. Create the appropriate accessors and mutators for these data members. 
+Accessors and Mutators
+It is customary in object oriented programming to be very selective in exposing the underlying data model of a class. Instance variables are customarily made private. Those parts of the data model that are only for internal use are not exposed to the wider world in any way. Those instance variables that are of legitimate concern to other classes are accompanied by get methods to return the values of these variables. If objects of other classes might reasonably be entitled to change a state variable, then a set method is provided to support the setting of this variable. These methods are usually referred to as accesors and mutators or getters and setters. 
+There is a naming convention that is extremely common in Java, particularly in a form of programming called JavaBeans which is widely used in building GUI's. According to this convention accessors are named getDataMember() and mutators are named setDataMember(). For example if a class has a data member name that is publicly known and publicly modifiable it might include the following defintions:
+      private String name = null;
+      public String getName();
+      public void setName(String name);
+You should adopt this convention in choosing names for your accessors and mutators. * Update Floor to have three collections of Passengers, one for those merely resident (just hanging out on the floor, not queued for leaving), one for those queued for up service, and one those queued for down service. 
+Collections
+In the abstract a collection is a class that holds objects. Objects may be inserted into the collection, removed from the collection, and retreived from the collection by reference by some indexing or sequentially. An array is a type of collection. Java also provides some collection framework, consisting of interfaces and classes. Among the collections provided in Java 6 are    HashSet, ArrayList, and HashMap, and Hashtable among others. The Java documentation for every class is readily available if you have installed the JDK with documentation, or on the web Java 6 API Packages. From there you can navigate to any particular class such as java.util.ArrayList. 
+Each collection is different and determining which one is best to solve a particular problem is a common design consideration. Consider how the collection will be used. Will it be scanned sequentially (consider a ArrayList), indexed directly (consider a Vector), or keyed (consider a HashMap)? Consider which operations you want to optimize: inserting, indexing, searching. Each collection has strengths and weaknesses. You should make careful consideration in choosing the right collection for the task. Here is a good reference on the differences of these classes: Java Collections Framework* Extend the definition of class Elevator to carry actual Passengers and to support its collaboration with the Floor class for loading and unloading those Passengers. A key question is how to change the way an Elevator represents the load it is carrying. In prior homeworks there was an array of int to represent how many riders were bound for each floor. Will you keep the array and change the type of its cells, or will you choose a brand new representation? 
+* Update Elevator.toString() to return a String that includes information about all the Passengers currently on board. 
+* Make all necessary revisions to the methods of classes Elevator and Floor to properly support the management of Passengers. Here is just one of the changes you will need to make: 
+o Enable a Floor object to accept a collection of Passengers when an Elevator stops there. This consists of overhauling Floor.unloadPassengers to take the Passengers out of the collection, one by one, and add them to its collection of residents. 
+* Make sure that your Elevator distinguishs between up requests and down requests, stopping only when appropriate. 
+* Endow your Passenger class with an arrive() method that is called when the Passenger reaches the destination floor. Make sure to update the Passenger's state upon arrival. 
+
+Demonstration 
+Show the Elevator, its Floors, and the Passenger collections successfully collaborating. In other words as the program runs it should show the Elevator unloading Passengers to the Floor and the Floor boarding passengers onto the Elevator. [Here, "showing" means nothing more than simple print statements on standard output.]
+In the simulation, initialize each Floor with some number of Passengers waiting to board the Elevator . Give each Passenger some random destination floor. Notice that when you create the Passengers you must put them into the appropriate queues (or collections) in the Floor floor. As before, make certain to create enough Passengers to demonstrate your overflow handling. 
+
+
+
+
+
+
+
+
+
+
+
+
+From http://courses.dce.harvard.edu/~cscie160/hw-submission.html 
+Homework Submission Policy
+
+Solution components
+A homework solution must include the following:
+* Overview - A text file describing your solution. This does not need to be a 20 page design document but should include a description of how you solved the homework, any assumptions you made in the design, the classes that you created, and how to execute your solution. If for some reason you are submitting an incomplete solution please explain what is missing or doesn't work in the submission. 
+* Java Source - Any java source files that you've created to solve this assignment. These should be well commented and well organized. 
+* Class Files - The class files that you've generated from the source above. 
+* JavaDoc - Documentation generated using the javadoc utility. If you include javadoc documentation, please place it in a "doc" or "api" subdirectory from your source files and make sure that this directory information is included in your JAR. Even if you choose not to submit the javadoc, your source files should be JavaDoc documented. 
+Optionally a submission may include the following:
+* Sample Output - A text file showing the output from a sample execution of the solution. This is not a substitute for a solution that is executable. I intend to run each sumbission. But this sample may be used to show various scenarios that may be of interest. 
+Packaging your solution
+You should pack up all of the components of your solution in a Java Archive (JAR) file. You can use the jar utility included with the JDK. Please name the JAR file HW#.jar, where # is the number of the homework assignment. For example, Homework 1 should be submitted in a JAR named HW1.jar. The following command, executed in the parent directory of cscie160, will produce a jar file with the correct directory structure
+   > jar cvf HW1.jar cscie160/hw1
+For further information on the jar utility, please see the JDK documentation. This can be found in the hierarchy of your Java distribution in <JDK root dir>/docs/tooldocs/<platform-name>/jar.html. Also see Sun's guide for jar 
+The TF's will be executing your solution from the JAR file, not extracting it, so make certain that you put class files into the JAR in directories equivalent with their packages. If you aren't certain, put only the JAR and java library in your classpath and verify that you can run your solution.
+Submitting the solution
+Once you've packaged up your solution in a JAR file, you can attach your JAR to an email sent to your TF. Please send the message with a subject line in the format:
+   Subject: CSCIE 160, Homework 1, Solution Submission
+This will make it easy for your TF to discern between submissions for help and final submission to be graded.
+Please include your full name in the email or the subject line so that the TF knows who the submission is for. If, for some reason, email submission is not possible for you, please speak with your TF about an alternative arrangement.
+Once your submission has been received your TF may make a sample solution available to you.
+
+
+
+From http://cscie160-distance.com/intro.html 
+Homework
+Homework should be submitted via this web site. Please browse to that page now, and create an account for yourself. When you log in there, you'll be presented with a summary of your submission status for each of the seven homework assignments. On the summary page, there is a form for uploading the homework implementations as .jar files. The web site is a bit rough around the edges; it will improve as the weeks go by. If it gives you any trouble please let me know. 
+Homework should be submitted as a .jar archive file in the format described on the main course web page 
+In addition to the guidelines given there, please note the following: 
+* The attachment should be a .jar file, not a .zip or anything else. 
+* It should contain a directory hierarchy that matches the package names. 
+* Please put the .java files in the same directory as the corresponding .class files. 
+* The root of the directory hierarchy within the .jar file should be relative to the current directory, and not an absolute path. 
+For example, for homework #1, the contents of the hw1.jar file should appear something like the following: 
+  cscie160/hw1/Elevator.java
+  cscie160/hw1/Elevator.class
+  cscie160/hw1/Overview.txt
+  cscie160/hw1/output.txt
+  cscie160/hw1/doc/Elevator.html and other .html files
+Please don't put any files at the top level directory. Every file in the .jar should extract into a directory below cscie160/hw1, so that I can tell easily to which assignment it belongs. 
+The main course web page says that the solution should be executable directly from the jar file. This means that you must make a command such as "java -classpath hw1.jar cscie160.hw1.Elevator" work correctly. It DOES NOT mean that you must make "java -jar hw1.jar" work. I won't require you to know the arcana involving MANIFEST.MF that is required to make this work, and there are several assignments that need multiple "main" methods (e.g. a client and a server in the same .jar file) where it's not at all clear which class should be blessed as the main class. 
+In your homework implementations, please adhere to the assignment specification as closely as possible. Resist the temptation to go far beyond what is required by the spec. I will develop a list of particular things I'll look for in each assignment, and if the code wanders it makes more work for me, to figure out if the wandering is justifiable. 
+Finally, my goal is to help you make an "A". If you send me a draft of your homework implementation along with specific questions about it, I will try to help you get it right. If you submit homework that is not "A" work, I will critique it and invite you to resubmit with corrections. I must draw the line there, though -- I won't accept more than two submissions. If there are multiple problems with a submission, I can't guarantee to catch all of them the first time around. 
+
